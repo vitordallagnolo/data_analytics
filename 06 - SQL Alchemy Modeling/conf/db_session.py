@@ -30,7 +30,7 @@ def create_engine(sqlite: bool = False) -> Engine:
         conn_str = f'sqlite:///{arquivo_db}'
         __engine = sa.create_engine(url=conn_str, echo=False, connect_args={"check_same_thread": False})
     else:
-        conn_str = "postgresql://user:pass@localhost:5432/picoles"
+        conn_str = "postgresql://user:password@localhost:5432/picoles"
         __engine = sa.create_engine(url=conn_str, echo=False)
     
     return __engine
@@ -43,7 +43,7 @@ def create_session() -> Session:
     global __engine
 
     if not __engine:
-        create_engine() # create_engine(sqlite=True)
+        create_engine(sqlite=False) # create_engine(sqlite=True)
     
     __session = sessionmaker(__engine, expire_on_commit=False, class_=Session)
 
